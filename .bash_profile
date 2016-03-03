@@ -6,9 +6,9 @@ _bash_projects_=~/.bash_projects
 function load {
 	local name=$1
 	local value=$(pwd)
-	local data="____$name=$value"
-	echo ${data:4}
-	echo  $data >> $_bash_projects_
+	local data="$name=$value"
+	printf "  \e[1;34mload ${data%=*} = ${data#*=}\e[m\n"
+	echo  ____$data >> $_bash_projects_
 	reload
 }
 function unload {
