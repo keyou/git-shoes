@@ -8,6 +8,7 @@ function load {
 	local value=$(pwd)
 	local data="$name=$value"
 	printf "  load \e[1;34m${data%=*}\e[m = ${data#*=}\n"
+	if [ ! -f $_bash_projects_ ];then echo '#!/bin/bash' >> $_bash_projects_; fi
 	echo  ____${data%=*}=\"${data#*=}\" >> $_bash_projects_
 	reload
 }
@@ -25,11 +26,12 @@ function ____align {
 }
 
 function go { 
+	reload
 	if [ -z $1 ]; then 
 		____ls;
 	else
 		eval local dir=\$____$1
-		if [ -z "$dir" ]; then ls; 
+		if [ ! -d "$dir" ]; then ____ls; 
 		else cd "$dir";
 		fi
 	fi
@@ -51,7 +53,7 @@ ____go_complete()
 }
 complete -F ____go_complete go
 
-if [ -f ~/.bash_projects ];then . ~/.bash_projects; fi
+if [ -f $_bash_projects_ ];then . $_bash_projects_; fi
 
 #echo cmds: \e[1;34m load , go ,unload
 
