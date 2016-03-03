@@ -1,2 +1,2 @@
 # git-shoes
-Some bash scripts to help manage git projects.
+Some produtive bash scripts to help manage git projects.
