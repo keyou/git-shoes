@@ -7,8 +7,8 @@ function load {
 	local name=$1
 	local value=$(pwd)
 	local data="$name=$value"
-	printf "  \e[1;34mload ${data%=*} = ${data#*=}\e[m\n"
-	echo  ____$data >> $_bash_projects_
+	printf "  load \e[1;34m${data%=*}\e[m = ${data#*=}\n"
+	echo  ____${data%=*}=\"${data#*=}\" >> $_bash_projects_
 	reload
 }
 function unload {
@@ -16,7 +16,8 @@ function unload {
 }
 function ____ls {
 	set -o posix
-	set | grep ^____* | sed 's/____//' | awk -F '=' '{ printf "\033[1;34m  %-10s \033[m%-40s\n", $1, $2 }'
+	set | grep ^____* | sed "s/____//;s/'//g" |\
+	awk -F '=' '{ printf "\033[1;34m  %-10s \033[m%-40s\n", $1, $2 }'
 }
 function ____align {
 	local fill='.............'
@@ -34,6 +35,23 @@ function go {
 	fi
 }
 
+____go_complete() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    #opts="win en3 breakpad"
+	set -o posix
+	opts=$(set | grep ^____* | sed "s/____//" | awk -F '=' '{ printf $1 " " }')
+    if [[ ${cur} == * ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" ${cur}) )
+        return 0
+    fi
+}
+complete -F ____go_complete go
+
 if [ -f ~/.bash_projects ];then . ~/.bash_projects; fi
 
+#echo cmds: \e[1;34m load , go ,unload
 
