@@ -1,10 +1,3 @@
 #!/bin/bash
 
-# config by hand
-____win="$_WR_"
-____en3="$_WR_/easinote-dream"
-____en5="$_WR_/en5"
-____coral="$_WR_/EasiNoteCoral"
 
-# config by auto load
-____home=/c/Users/Queue

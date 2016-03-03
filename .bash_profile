@@ -1,8 +1,7 @@
-#if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 
 # config for keyou
 alias reload="source ~/.bash_profile"
-alias ppk='start pageant.exe ~/.ssh/id_rsa_putty.ppk'
 _bash_projects_=~/.bash_projects
 function load {
 	local name=$1
@@ -24,9 +23,7 @@ function ____align {
 	printf "%s%s%s\n" "$1" "${fill:${#1}}" "$2"
 }
 
-_WR_="/w/01.SVN/06.IDB.Git/Win/IIP.Win"
 function go { 
-	#cd $_WR_;
 	if [ -z $1 ]; then 
 		____ls;
 	else
